@@ -12,6 +12,7 @@ This repo contains ready-to-use automation workflows built using [n8n](https://n
 ## 📦 Use Cases
 
 - Tweet generation from Telegram
+- Influencer is a copy of this [https://github.com/gyoridavid/ai_agents_az/tree/main/episode_8](https://github.com/gyoridavid/ai_agents_az/tree/main/episode_8)
 
 ## 🔧 Requirements
 
