@@ -1,0 +1,2151 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        480
+      ],
+      "id": "2775ddab-8dda-40d1-b618-acaba5eee48b",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "116298a2-1008-4c7c-839a-dddecb29d8d2",
+              "name": "SUPABASE_PROJECT_ID",
+              "value": "rdmcymwdlxebzggtgcdb",
+              "type": "string"
+            },
+            {
+              "id": "8d0ca179-9bdd-4ad8-aa38-13e81f572122",
+              "name": "SUPABASE_BUCKET_NAME",
+              "value": "instagram-images",
+              "type": "string"
+            },
+            {
+              "id": "16a4a274-a729-44d5-a8a4-f99587535345",
+              "name": "INSTAGRAM_BUSINESS_ACCOUNT_ID",
+              "value": "17841474528755271",
+              "type": "string"
+            },
+            {
+              "id": "f4e2138a-bfb8-407b-ac18-36efe67ec2d7",
+              "name": "EMAIL_ADDRESS",
+              "value": "msomasundaram93@gmail.com",
+              "type": "string"
+            },
+            {
+              "id": "c7a51a3e-5c97-42b1-b276-af5efa000035",
+              "name": "REFERENCE_IMAGE",
+              "value": "reference_image.png",
+              "type": "string"
+            },
+            {
+              "id": "26e82c19-e1ae-463b-8930-20a9b72d17f5",
+              "name": "PROFILE",
+              "value": "=Name\nPriya Aiya\n\nAge\n28\n\nProfession\nSoftware Engineer at a FAANG company\n\nWhat She Does\nTravels to different countries and big cities\n\nVisits major tech offices, shares her experiences\n\nPosts about adventures, both outdoors and in the city\n\nShares practical programming tips, startup vs. MNC life\n\nPresents at conferences and events\n\nTypical Posts\nWorking from stylish cafés or luxury hotels\n\nPacking tips for techies (laptop, camera, travel essentials)\n\nDressed up in a saree at events, or in casual western wear at airports and workspaces\n\nSpeaking on stage or presenting at meetups\n\nSunrise/sunset moments, sometimes solo, sometimes with friends\n\nAppearance\nSouth Asian (ambiguously Indian/Sri Lankan/Bangladeshi, etc.)\n\nMedium-length brown hair, brown eyes\n\nTanned skin\n\nConfident, approachable smile\n\nStyle & Dress\nComfortable switching between a traditional saree and modern western outfits\n\nOften seen in elegant sarees at talks or cultural places\n\nCasual shirts, shorts, plain T-shirts, or long pants in daily life and while traveling\n\nMinimal, classic jewelry and practical footwear\n\nInspired By\nDavid Attenborough: Storytelling, curiosity, sense of wonder\n\nRobert Irwin: Energy, love for adventure, and openness\n\nPriya blends tech, travel, and the best of both Indian and global fashion. She’s modern, but proud of her roots.\n\nQuick Summary:\nPriya is a globe-trotting engineer who mixes Indian and western styles. You’ll see her in a saree at a tech event, and in shorts at a beach café, always sharing stories from her journey in tech, travel, and life.",
+              "type": "string"
+            },
+            {
+              "id": "2f40e267-a0ba-411f-b0c2-ac50b65ada56",
+              "name": "CURRENT_QUARTER",
+              "value": "=Q{{ $now.format('q') }}",
+              "type": "string"
+            },
+            {
+              "id": "37e37860-24a3-4d61-b953-de23ef9ce0b5",
+              "name": "WEEK",
+              "value": "={{ $now.startOf('week').format('MMMM dd') }} ({{ $now.startOf('week').format('EEEE') }}) - {{ $now.endOf('week').format('MMMM dd') }} ({{ $now.endOf('week').format('EEEE') }})",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -360,
+        480
+      ],
+      "id": "55023977-4c00-4963-a2a0-e0a8264c3c2c",
+      "name": "Configure workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c57d6fe3-c7f3-4fd9-85f2-e9e54cd59840",
+              "name": "change_requests",
+              "value": "={{ $json.data['Change requests'] }}",
+              "type": "string"
+            },
+            {
+              "id": "8cc398cd-70db-4c91-934f-14fac2e38e27",
+              "name": "quarterly_plan",
+              "value": "={{ $('Generate quarterly plan').item.json.output.quarterly_plan }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1660,
+        360
+      ],
+      "id": "629c6d62-e7ca-4850-805b-d13ca456b4c6",
+      "name": "Change request fields"
+    },
+    {
+      "parameters": {
+        "content": "# Create quarterly plan",
+        "height": 600,
+        "width": 1860
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        240
+      ],
+      "id": "998b79ea-4e38-4af6-95c8-8c3cc49b47cb",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "plans",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "period_type",
+              "keyValue": "month"
+            },
+            {
+              "keyName": "period_type",
+              "keyValue": "month"
+            },
+            {
+              "keyName": "period_index",
+              "keyValue": "={{ $now.format('yyyy/MMMM') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        100,
+        1060
+      ],
+      "id": "35d2a84f-140f-47ae-9d5b-519c75017725",
+      "name": "Get monthly plan",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "Wfy7dt1B7FBdixUI",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c57d6fe3-c7f3-4fd9-85f2-e9e54cd59840",
+              "name": "change_requests",
+              "value": "={{ $json.data['Change requests'] }}",
+              "type": "string"
+            },
+            {
+              "id": "8cc398cd-70db-4c91-934f-14fac2e38e27",
+              "name": "monthly_plan",
+              "value": "={{ $('Generate monthly plan').item.json.output.monthly_plan }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1640,
+        1060
+      ],
+      "id": "9e9076d7-3d85-424f-b772-17210e4ca936",
+      "name": "Change request fields1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a753a22c-2595-4c88-8438-63102a03d113",
+              "leftValue": "={{ $json.data['Approve the monthly plan?'] }}",
+              "rightValue": "yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1460,
+        1060
+      ],
+      "id": "c795ce56-ec35-4116-8f64-2a32b1ed591c",
+      "name": "Need changes?1"
+    },
+    {
+      "parameters": {
+        "content": "# Create monthly plan",
+        "height": 620,
+        "width": 1860
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        920
+      ],
+      "id": "5b8aebb8-c258-4ccf-8dba-2820b8c2f8ff",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ad1608d1-c4f1-40a0-a17b-f50f922c07a2",
+              "leftValue": "={{ $json.data[0] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        1060
+      ],
+      "id": "2ae059c0-655c-4121-861d-66b36e4f3d35",
+      "name": "Has monthly plan?"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Configure workflow').item.json.EMAIL_ADDRESS }}",
+        "subject": "=[Action required] Create monthly plan for {{ $now.toFormat('yyyy/MMMM') }}",
+        "message": "=Add instructions to create the monthly plan for {{ $now.toFormat('yyyy/MMMM') }}\n\nAs a reminder, here's the plan for {{ $now.format('yyyy') }}-{{ $('Configure workflow').item.json.CURRENT_QUARTER }}:\n\n{{ $('Quaterly plan aggregate').item.json.data[0].plan_value }}",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Instructions",
+              "fieldType": "textarea",
+              "placeholder": "Instructions for the monthly plan",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "messageButtonLabel": "Create monthly plan"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        680,
+        1060
+      ],
+      "id": "b1ab1498-7d5c-4485-a3aa-7f571ee957b9",
+      "name": "Get instructions on the monthly plan",
+      "webhookId": "03a0b1ff-a665-4657-9fa2-e43aaa7e59ad",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MmD5ZRyVg1cLfpjB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Configure workflow').item.json.EMAIL_ADDRESS }}",
+        "subject": "=[action required] Approve monthly plan for {{ $now.format('yyyy/MMMM') }}",
+        "message": "=The following monthly plan was generated for {{ $now.format('yyyy/MMMM') }}, please approve or ask for changes\n\n{{ $json.output.monthly_plan }}",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Approve the monthly plan?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "yes"
+                  },
+                  {
+                    "option": "no - I'll add my change requests below"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Change requests",
+              "fieldType": "textarea",
+              "placeholder": "(optional) Add your change requests"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1260,
+        1060
+      ],
+      "id": "f0b5ca8d-1388-4636-9055-0b3b2c6ceb85",
+      "name": "Montly plan approval",
+      "webhookId": "08e878d2-3f61-45b5-9b90-e06f96f632ad",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MmD5ZRyVg1cLfpjB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "plans",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "period_type",
+              "fieldValue": "month"
+            },
+            {
+              "fieldId": "period_index",
+              "fieldValue": "={{ $now.format('yyyy/MMMM') }}"
+            },
+            {
+              "fieldId": "plan_value",
+              "fieldValue": "={{ $('Generate monthly plan').item.json.output.monthly_plan }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        1280
+      ],
+      "id": "d1ec6598-68d0-4e35-906a-02645768bc74",
+      "name": "Save monthly plan",
+      "credentials": {
+        "supabaseApi": {
+          "id": "Wfy7dt1B7FBdixUI",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Create weekly plan",
+        "height": 580,
+        "width": 1860
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        1620
+      ],
+      "id": "3300eaa2-813a-4200-818d-6da25e97a306",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "plans",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "period_type",
+              "keyValue": "week"
+            },
+            {
+              "keyName": "period_index",
+              "keyValue": "={{ $now.format('yyyy/week-WW') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        100,
+        1720
+      ],
+      "id": "77765fcf-e598-4852-bd51-7e2fdeefa086",
+      "name": "Get weekly plan",
+      "retryOnFail": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "Wfy7dt1B7FBdixUI",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b728c77c-a939-4388-b8b7-9465b5243ee0",
+              "leftValue": "={{ $json.data[0] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        1720
+      ],
+      "id": "d5f0c82e-b9d6-40ba-ac06-1188a89119af",
+      "name": "Has weekly plan?"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Configure workflow').item.json.EMAIL_ADDRESS }}",
+        "subject": "=[Action required] Create weekly plan for {{ $('Configure workflow').item.json.WEEK }}",
+        "message": "=Add instructions to create the weekly plan for {{ $('Configure workflow').item.json.WEEK }}\n\nAs a reminder, here's the {{ $now.format('yyyy') }}-{{ $('Configure workflow').item.json.CURRENT_QUARTER }} plan:\n\n{{ $('Quaterly plan aggregate').item.json.data[0].plan_value }}\n\nAnd this is the monthly plan:\n\n{{ $('Monthly plan aggregate').item.json.data[0].plan_value }}",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Instructions",
+              "fieldType": "textarea",
+              "placeholder": "Instructions for the weekly plan",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "messageButtonLabel": "Create weekly plan"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        680,
+        1720
+      ],
+      "id": "a65f8c85-9ce9-48fc-b6a0-4ce99bd83e89",
+      "name": "Get instructions on the weekly plan",
+      "webhookId": "03a0b1ff-a665-4657-9fa2-e43aaa7e59ad",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MmD5ZRyVg1cLfpjB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Configure workflow').item.json.EMAIL_ADDRESS }}",
+        "subject": "=[action required] Approve weekly plan for {{ $('Configure workflow').item.json.WEEK }}",
+        "message": "=The following weekly plan was generated for {{ $('Configure workflow').item.json.WEEK }}, please approve or ask for changes\n\n{{ $json.output.weekly_plan }}",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Approve the weekly plan?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "yes"
+                  },
+                  {
+                    "option": "no - I'll add my change requests below"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Change requests",
+              "fieldType": "textarea",
+              "placeholder": "(optional) Add your change requests"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1200,
+        1720
+      ],
+      "id": "fdaf5f07-db13-4653-bdd6-81de754303a6",
+      "name": "Weekly plan approval",
+      "webhookId": "08e878d2-3f61-45b5-9b90-e06f96f632ad",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MmD5ZRyVg1cLfpjB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a753a22c-2595-4c88-8438-63102a03d113",
+              "leftValue": "={{ $json.data['Approve the weekly plan?'] }}",
+              "rightValue": "yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1380,
+        1720
+      ],
+      "id": "abc94e15-2f8f-4e12-b854-6042f54c3794",
+      "name": "Changes to the weekly plan?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c57d6fe3-c7f3-4fd9-85f2-e9e54cd59840",
+              "name": "change_requests",
+              "value": "={{ $json.data['Change requests'] }}",
+              "type": "string"
+            },
+            {
+              "id": "8cc398cd-70db-4c91-934f-14fac2e38e27",
+              "name": "weekly_plan",
+              "value": "={{ $('Generate weekly plan').item.json.output.weekly_plan }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1560,
+        1720
+      ],
+      "id": "c02ce492-2254-4c2a-aa60-5e4fad6db66a",
+      "name": "Weekly plan change fields"
+    },
+    {
+      "parameters": {
+        "tableId": "plans",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "period_type",
+              "fieldValue": "week"
+            },
+            {
+              "fieldId": "period_index",
+              "fieldValue": "={{ $now.format('yyyy/week-WW') }}"
+            },
+            {
+              "fieldId": "plan_value",
+              "fieldValue": "={{ $('Generate weekly plan').item.json.output.weekly_plan }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        1940
+      ],
+      "id": "cf77c1fa-3e26-4fab-9077-99939d4b51d1",
+      "name": "Save weekly plan",
+      "credentials": {
+        "supabaseApi": {
+          "id": "Wfy7dt1B7FBdixUI",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        300,
+        2480
+      ],
+      "id": "7444d4c4-6355-4bd0-9201-d012c3e24000",
+      "name": "merge previous week's posts"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/edits",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "={{ $('Generate new Instagram post').item.json.output.image_prompt }}"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "image",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "model",
+              "value": "gpt-image-1"
+            },
+            {
+              "name": "quality",
+              "value": "high"
+            },
+            {
+              "name": "size",
+              "value": "1024x1024"
+            },
+            {
+              "name": "output_format",
+              "value": "jpeg"
+            },
+            {
+              "name": "output_compression",
+              "value": "80"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1240,
+        2480
+      ],
+      "id": "bf07a85f-6746-41fe-bf3c-d31a2d677ea6",
+      "name": "Generate image with OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "uMizPTa7hPdEhni9",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data[0].b64_json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1440,
+        2480
+      ],
+      "id": "525ada30-0d36-49c9-8191-e5cee8b552f3",
+      "name": "Convert response to image"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "adef3034-fabf-4616-b45a-fdd262318229",
+              "name": "share_link",
+              "value": "=https://{{ $('Configure workflow').item.json.SUPABASE_PROJECT_ID }}.supabase.co/storage/v1/object/public/{{ $('Configure workflow').item.json.SUPABASE_BUCKET_NAME }}/{{ $('Generate unique id').item.json.image_id }}.jpg",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1840,
+        2480
+      ],
+      "id": "9d1264c1-7a88-4bce-a318-0d6771b3aff2",
+      "name": "Add share link"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Configure workflow').item.json.EMAIL_ADDRESS }}",
+        "subject": "=[Action required] Approve Instagram post {{ $now.toLocaleString() }}",
+        "message": "=Image: <a target=\"_blank\" href=\"{{ $json.share_link }}\">Generated Instagram image</a>\n\nPost content:\n\n{{ $('Generate new Instagram post').item.json.output.post_content }}",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Approve?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "yes"
+                  },
+                  {
+                    "option": "no - I'll add my change requests below"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Change requests",
+              "fieldType": "textarea",
+              "placeholder": "(optional) Change requests for the Instagram post"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2040,
+        2480
+      ],
+      "id": "c771f226-f6d5-4966-9171-96def0422317",
+      "name": "Get approval for the post",
+      "webhookId": "728f8049-2461-4c13-af6d-468328d16020",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MmD5ZRyVg1cLfpjB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "82e9c4ea-904d-4497-adef-ffa55082837a",
+              "leftValue": "={{ $json.data['Approve?'] }}",
+              "rightValue": "yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        100,
+        2820
+      ],
+      "id": "bed7adc7-f17b-4ae1-bb69-864cd99e1780",
+      "name": "Post approved?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2c107111-1aa6-4525-9667-1b979b4cb7be",
+              "name": "post_content",
+              "value": "={{ $('Generate new Instagram post').item.json.output.post_content }}",
+              "type": "string"
+            },
+            {
+              "id": "fd281099-1fc1-42dd-93b2-22301e9c502f",
+              "name": "image_prompt",
+              "value": "={{ $('Generate new Instagram post').item.json.output.image_prompt }}",
+              "type": "string"
+            },
+            {
+              "id": "b3c122e9-a3f0-4595-8d3d-1b62a4a1dfca",
+              "name": "change_requests",
+              "value": "={{ $('Post approved?').item.json.data['Change requests'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        2820
+      ],
+      "id": "10e91ec0-9ee6-4499-bf70-b8fd5581a66c",
+      "name": "Add post change request fields"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v22.0",
+        "node": "17841474528755271",
+        "edge": "media",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "image_url",
+                "value": "={{ $('Add share link').item.json.share_link }}"
+              },
+              {
+                "name": "caption",
+                "value": "={{ $('Generate new Instagram post').item.json.output.post_content }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        100,
+        3500
+      ],
+      "id": "a23a1395-d6b9-4ecc-85ad-d189a6169003",
+      "name": "Facebook Graph API",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "UdNh5hjKIIv8zmm9",
+          "name": "Facebook Graph account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "generate",
+        "dataPropertyName": "image_id"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        840,
+        2480
+      ],
+      "id": "8396dd46-bf60-47b3-b116-034c45aafed6",
+      "name": "Generate unique id"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://{{ $('Configure workflow').item.json.SUPABASE_PROJECT_ID }}.supabase.co/storage/v1/object/{{ $('Configure workflow').item.json.SUPABASE_BUCKET_NAME }}/{{ $('Generate unique id').item.json.image_id }}.jpg",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "data"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1640,
+        2480
+      ],
+      "id": "1d86bbaa-8ca8-4f81-9925-8b4643dac63b",
+      "name": "Upload image to Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "Wfy7dt1B7FBdixUI",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v22.0",
+        "node": "17841474528755271",
+        "edge": "media_publish",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "creation_id",
+                "value": "={{ $json.id }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        300,
+        3500
+      ],
+      "id": "a62aae2d-9cbe-48bf-856b-290ec9345603",
+      "name": "Facebook Graph API1",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "UdNh5hjKIIv8zmm9",
+          "name": "Facebook Graph account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Configure workflow').item.json.EMAIL_ADDRESS }}",
+        "subject": "=[Action required] Create quarterly plan for {{ $now.format('yyyy') }} {{ $('Configure workflow').item.json.CURRENT_QUARTER }}",
+        "message": "=Add instructions to create the quarterly plan for {{ $now.format('yyyy') }} {{ $('Configure workflow').item.json.CURRENT_QUARTER }}",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Instructions",
+              "fieldType": "textarea",
+              "placeholder": "=Instructions for {{ $now.format('yyyy') }} {{ $('Configure workflow').item.json.CURRENT_QUARTER }} plan",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "messageButtonLabel": "=Create {{ $now.format('yyyy') }} {{ $('Configure workflow').item.json.CURRENT_QUARTER }} plan"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        680,
+        360
+      ],
+      "id": "8a0041d6-f878-449f-b7d2-1b92073027b8",
+      "name": "Get instructions on the quarterly plan",
+      "webhookId": "03a0b1ff-a665-4657-9fa2-e43aaa7e59ad",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MmD5ZRyVg1cLfpjB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e2eb3395-ad04-4360-a855-7922a2534582",
+              "leftValue": "={{ $json.data[0] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        360
+      ],
+      "id": "424f8608-36b4-4c01-aa8e-aa4c70e737d4",
+      "name": "Has quarterly plan?"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "plans",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "period_type",
+              "keyValue": "quarter"
+            },
+            {
+              "keyName": "period_index",
+              "keyValue": "={{ $now.toFormat('yyyy') }}-{{ $('Configure workflow').item.json.CURRENT_QUARTER }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        80,
+        360
+      ],
+      "id": "39bb8e97-0ae5-471a-bdf0-7a892667ff13",
+      "name": "Get quarterly plan",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "Wfy7dt1B7FBdixUI",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Configure workflow').item.json.EMAIL_ADDRESS }}",
+        "subject": "=[action required] Approve plan for {{ $now.format('yyyy') }}-{{ $('Configure workflow').item.json.CURRENT_QUARTER }}",
+        "message": "=The following yearly plan was generated, please approve or ask for changes\n\n{{ $json.output.quarterly_plan }}",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "=Do you approve the plan?",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "yes"
+                  },
+                  {
+                    "option": "no - I'll add my change requests below"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Change requests",
+              "fieldType": "textarea",
+              "placeholder": "(optional) Add your change requests"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1260,
+        360
+      ],
+      "id": "429aa8a7-ca5b-4b26-9b2a-13861bb3cbd6",
+      "name": "Get approval on the quarterly plan",
+      "webhookId": "08e878d2-3f61-45b5-9b90-e06f96f632ad",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MmD5ZRyVg1cLfpjB",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "plans",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "period_type",
+              "fieldValue": "quarter"
+            },
+            {
+              "fieldId": "period_index",
+              "fieldValue": "={{ $now.toFormat('yyyy') }}-{{ $('Configure workflow').item.json.CURRENT_QUARTER }}"
+            },
+            {
+              "fieldId": "plan_value",
+              "fieldValue": "={{ $('Generate quarterly plan').item.json.output.quarterly_plan }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        580
+      ],
+      "id": "8d9e117a-1145-4b8d-897a-a24170cf0bf1",
+      "name": "Save quarterly plan",
+      "credentials": {
+        "supabaseApi": {
+          "id": "Wfy7dt1B7FBdixUI",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://{{ $('Configure workflow').item.json.SUPABASE_PROJECT_ID }}.supabase.co/storage/v1/object/public/{{ $('Configure workflow').item.json.SUPABASE_BUCKET_NAME }}/{{ $('Configure workflow').item.json.REFERENCE_IMAGE }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1040,
+        2480
+      ],
+      "id": "c3e2d33a-22c5-453e-885d-092ddfc82bc7",
+      "name": "Download the reference image"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "posts",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "created_at",
+              "condition": "gte",
+              "keyValue": "={{ $now.minus(1, 'week') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        100,
+        2480
+      ],
+      "id": "63ff99a5-7f1b-4226-af4b-0dd4bb1e8481",
+      "name": "Get posts from the past 7 days",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "Wfy7dt1B7FBdixUI",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Post to instagram\n# [Guide to setup Facebook (Instagram)](https://github.com/gyoridavid/ai_agents_az/blob/main/episode_8/guide-instagram.md)",
+        "height": 500,
+        "width": 640,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        20,
+        3320
+      ],
+      "id": "b76aae51-9dc6-46b1-b284-89a4d6cb1eee",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "# Create a new instagram post",
+        "height": 960,
+        "width": 2240,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        2300
+      ],
+      "id": "1c805d15-40d5-4b7b-af26-9df55dd5d805",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "# Configure!",
+        "height": 600,
+        "width": 400,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        240
+      ],
+      "id": "e2a3075c-7e76-4eba-950a-cd81af31e625",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "tableId": "posts",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "post_summary",
+              "fieldValue": "={{ $('Generate new Instagram post').item.json.output.summary }}"
+            },
+            {
+              "fieldId": "image_path",
+              "fieldValue": "={{ $('Configure workflow').item.json.SUPABASE_BUCKET_NAME }}/{{ $('Generate unique id').item.json.image_id }}.jpg"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        100,
+        3060
+      ],
+      "id": "4777b784-1b4b-4950-89e3-246455eaef24",
+      "name": "Save the post",
+      "credentials": {
+        "supabaseApi": {
+          "id": "Wfy7dt1B7FBdixUI",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Use any LLM provider\n\n- ollama\n- openrouter\n- openai\n- gemini\n- ...",
+        "height": 620,
+        "width": 420,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        920
+      ],
+      "id": "71463a7c-7da6-445c-a916-cf36ffa902e8",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a753a22c-2595-4c88-8438-63102a03d113",
+              "leftValue": "={{ $json.data['Do you approve the plan?'] }}",
+              "rightValue": "yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        360
+      ],
+      "id": "92f37583-a3b1-4f4d-91d8-b704d5eca7e7",
+      "name": "Approve quarterly plan?"
+    },
+    {
+      "parameters": {
+        "text": "=Create a social media post for this artificial person, who's sharing her life on Instagram using the instructions below.\nUse the detailed weekly plan to find what to post today. Make sure to look at the previous posts (if available) to make sure the post fits to the plan in a logical order.\n\nFor each post, generate an instagram post (text content and an image generation prompt). \nAs I'm using a reference image for the image generation, don't describe the general look of the person, and start with \"create a photorealistic image of me\", and continue with describing the scene in great detail, make it a few paragraph long. Make sure the image prompt includes \"do not add any text on the image\".\nCreate a short summary of the post for cateloging purposes.\n\n<PersonalProfile>\n{{ $('Configure workflow').item.json.PROFILE }}\n</PersonalProfile>\n\n<WeeklyPlan>\n{{ $('Weekly plan aggregate').item.json.data[0].plan_value }}\n</WeeklyPlan>\n\n<DayOfTheWeek>\n{{ $now.format('EEEE') }}\n</DayOfTheWeek>\n\n{{ !$json.data[0].isEmpty() ? `\n<PreviousPosts>\n${$json.data.map(item => `\n<Post>\n  <PostedAt>${item.created_at}</PostedAt>\n  <Content>${item.post_summary}</Content>\n</Post>\n`).join('\\n')}\n</PreviousPosts>\n` : '' }}\n\n{{ $json.change_requests ? `\nThe post was already generated, please apply the change requests\n\n<PostContent>\n${$json.post_content}\n</PostContent>\n\n<ImagePrompt>\n${$json.image_prompt}\n</ImagePrompt>\n\n<ChangeRequests>\n${$json.change_requests}\n</ChangeRequests>\n` : '' }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "post_content",
+              "description": "the instagram post's text content to share with the image. use emojis, hashtags",
+              "required": true
+            },
+            {
+              "name": "image_prompt",
+              "description": "the image prompt to use to generate the social media image",
+              "required": true
+            },
+            {
+              "name": "summary",
+              "description": "short summary of the post",
+              "required": true
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "You are a social media expert. Create a post for instagram based on the instructions."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        500,
+        2480
+      ],
+      "id": "e408f0f8-5207-492a-afb9-b33b7964f0fe",
+      "name": "Generate new Instagram post"
+    },
+    {
+      "parameters": {
+        "text": "=Create a quarterly plan for {{ $now.format('yyyy') }}-{{ $('Configure workflow').item.json.CURRENT_QUARTER }} for this artificial person, who's sharing the life events on Instagram using the instructions below. Make sure it's detailed, and every month is planned out in great depth.\n\n<PersonalProfile>\n{{ $('Configure workflow').item.json.PROFILE }}\n</PersonalProfile>\n\n<Instructions>\n{{ $json.data.Instructions }}\n</Instructions>\n\n{{ $json.change_requests ? `\nThe plan was already generated, please make the requested changes.\n\n<QuarterlyPlan>\n${$json.quarterly_plan}\n</QuarterlyPlan>\n\n<ChangeRequests>\n${$json.change_requests}\n</ChangeRequests>\n` : '' }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "quarterly_plan",
+              "description": "quarterly plan in a markdows format",
+              "required": true
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "You are a travel planner for a famous instagram celebrity. Create a detailed plan according to the instructions."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        900,
+        360
+      ],
+      "id": "398f8c04-dd57-4688-aec0-4194e3d3eaff",
+      "name": "Generate quarterly plan"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        280,
+        360
+      ],
+      "id": "14b538fb-a38e-464b-bbc4-9079d643286f",
+      "name": "Quaterly plan aggregate"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        300,
+        1060
+      ],
+      "id": "852d289d-65e4-4b6a-8822-e4ca7d5a2ed6",
+      "name": "Monthly plan aggregate"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        300,
+        1720
+      ],
+      "id": "605f10be-8a89-4e11-9e0f-d55ddde78d24",
+      "name": "Weekly plan aggregate"
+    },
+    {
+      "parameters": {
+        "text": "=Create a monthly plan for this artificial person, who's sharing her life on Instagram using the instructions below.\nUse the {{ $now.format('yyyy') }}-{{ $('Configure workflow').item.json.CURRENT_QUARTER }} plan and the current month to create the right plan.\nEach week of the month should be planned out.\n\n<PersonalProfile>\n{{ $('Configure workflow').item.json.PROFILE }}\n</PersonalProfile>\n\n<Instructions>\n{{ $json.data.Instructions }}\n</Instructions>{{ $json.data.Instructions }}\n\n<QuarterlyPlan>\n{{ $now.format('yyyy') }}-{{ $('Configure workflow').item.json.CURRENT_QUARTER }}:\n\n{{ $('Quaterly plan aggregate').item.json.data[0].plan_value }}\n</QuarterlyPlan>\n\n<CurrentMonth>\n{{ $now.format('MMMM') }}\n</CurrentMonth>\n\n{{ $json.change_requests ? `\nThe monthly plan was already generated, please make the requested changes.\n\n<MonthlyPlan>\n${$json.monthly_plan}\n</MonthlyPlan>\n\n<ChangeRequests>\n${$json.change_requests}\n</ChangeRequests>\n` : '' }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "monthly_plan",
+              "description": "the generated monthly plan",
+              "required": true
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "You are a travel planner for a famous instagram celebrity. Create a detailed plan according to the instructions."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        900,
+        1060
+      ],
+      "id": "9057db3a-19de-4835-ab37-b379f654e247",
+      "name": "Generate monthly plan"
+    },
+    {
+      "parameters": {
+        "text": "=Create a social media post calendar for this artificial person, who's sharing the life events on Instagram using the instructions below.\nUse the {{ $now.format('yyyy') }}-{{ $('Configure workflow').item.json.CURRENT_QUARTER }} plan, then monthly plan and the target week to create the right plan.\nEach day of the week should be carefully planned, monday to sunday. Add at least one paragraph to each day.\n\n<PersonalProfile>\n{{ $('Configure workflow').item.json.PROFILE }}\n</PersonalProfile>\n\n<Instructions>\n{{ $json.data.Instructions }}\n</Instructions>{{ $json.data.Instructions }}\n\n<QuarterlyPlan>\n{{ $now.format('yyyy') }}-{{ $('Configure workflow').item.json.CURRENT_QUARTER }}:\n\n{{ $('Quaterly plan aggregate').item.json.data[0].plan_value }}\n</QuarterlyPlan>\n\n<MonthlyPlan>\n{{ $('Monthly plan aggregate').item.json.data[0].plan_value }}\n</MonthlyPlan>\n\n<TargetWeek>\n{{ $('Configure workflow').item.json.WEEK }}\n</TargetWeek>\n\n{{ $json.change_requests ? `\nThe weekly plan was already generated, please make the requested changes.\n\n<WeeklyPlan>\n${$json.weekly_plan}\n</WeeklyPlan>\n\n<ChangeRequests>\n${$json.change_requests}\n</ChangeRequests>\n` : '' }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "weekly_plan",
+              "description": "the weekly plan",
+              "required": true
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "You are a travel planner for a famous instagram celebrity. Create a detailed plan according to the instructions."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        880,
+        1720
+      ],
+      "id": "d9dedc9a-6bdb-4a01-92f5-2bc083a6d9a9",
+      "name": "Generate weekly plan"
+    },
+    {
+      "parameters": {
+        "content": "# [Watch the video on Youtube](https://youtu.be/x7kEfmQrHqo)",
+        "height": 180,
+        "width": 580
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        700,
+        0
+      ],
+      "id": "8f192b04-2867-4609-9ae9-1a031777ad1b",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "# Need help?\n\n## [Join our Discord server](https://discord.gg/G7FJVJQ6RE)",
+        "height": 180,
+        "width": 540
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        0
+      ],
+      "id": "1c7d1ee1-752e-498a-863e-3c2107672ebf",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "# Read the guides on GitHub\n\n## [Guide to setup Supabase](https://github.com/gyoridavid/ai_agents_az/blob/main/episode_8/guide-supabase.md)\n## [Guide to setup Facebook (Instagram)](https://github.com/gyoridavid/ai_agents_az/blob/main/episode_8/guide-instagram.md)",
+        "height": 180,
+        "width": 660
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "119b5f32-110a-44db-8f5b-6656a13d8e46",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        1220
+      ],
+      "id": "c2cc7f99-3c2c-4082-a9b3-45d0c742c34e",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "BBCNO5fPf2OIJxQt",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Configure workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configure workflow": {
+      "main": [
+        [
+          {
+            "node": "Get quarterly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Change request fields": {
+      "main": [
+        [
+          {
+            "node": "Generate quarterly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get monthly plan": {
+      "main": [
+        [
+          {
+            "node": "Monthly plan aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Change request fields1": {
+      "main": [
+        [
+          {
+            "node": "Generate monthly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Need changes?1": {
+      "main": [
+        [
+          {
+            "node": "Save monthly plan",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Change request fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has monthly plan?": {
+      "main": [
+        [
+          {
+            "node": "Get weekly plan",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get instructions on the monthly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get instructions on the monthly plan": {
+      "main": [
+        [
+          {
+            "node": "Generate monthly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montly plan approval": {
+      "main": [
+        [
+          {
+            "node": "Need changes?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save monthly plan": {
+      "main": [
+        [
+          {
+            "node": "Get monthly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get weekly plan": {
+      "main": [
+        [
+          {
+            "node": "Weekly plan aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has weekly plan?": {
+      "main": [
+        [
+          {
+            "node": "Get posts from the past 7 days",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get instructions on the weekly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get instructions on the weekly plan": {
+      "main": [
+        [
+          {
+            "node": "Generate weekly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Weekly plan approval": {
+      "main": [
+        [
+          {
+            "node": "Changes to the weekly plan?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Changes to the weekly plan?": {
+      "main": [
+        [
+          {
+            "node": "Save weekly plan",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Weekly plan change fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Weekly plan change fields": {
+      "main": [
+        [
+          {
+            "node": "Generate weekly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save weekly plan": {
+      "main": [
+        [
+          {
+            "node": "Get weekly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "merge previous week's posts": {
+      "main": [
+        [
+          {
+            "node": "Generate new Instagram post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate image with OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Convert response to image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert response to image": {
+      "main": [
+        [
+          {
+            "node": "Upload image to Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add share link": {
+      "main": [
+        [
+          {
+            "node": "Get approval for the post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get approval for the post": {
+      "main": [
+        [
+          {
+            "node": "Post approved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post approved?": {
+      "main": [
+        [
+          {
+            "node": "Save the post",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Add post change request fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add post change request fields": {
+      "main": [
+        [
+          {
+            "node": "Generate new Instagram post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facebook Graph API": {
+      "main": [
+        [
+          {
+            "node": "Facebook Graph API1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate unique id": {
+      "main": [
+        [
+          {
+            "node": "Download the reference image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload image to Supabase": {
+      "main": [
+        [
+          {
+            "node": "Add share link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get instructions on the quarterly plan": {
+      "main": [
+        [
+          {
+            "node": "Generate quarterly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has quarterly plan?": {
+      "main": [
+        [
+          {
+            "node": "Get monthly plan",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get instructions on the quarterly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get quarterly plan": {
+      "main": [
+        [
+          {
+            "node": "Quaterly plan aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get approval on the quarterly plan": {
+      "main": [
+        [
+          {
+            "node": "Approve quarterly plan?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save quarterly plan": {
+      "main": [
+        [
+          {
+            "node": "Get quarterly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download the reference image": {
+      "main": [
+        [
+          {
+            "node": "Generate image with OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get posts from the past 7 days": {
+      "main": [
+        [
+          {
+            "node": "merge previous week's posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save the post": {
+      "main": [
+        [
+          {
+            "node": "Facebook Graph API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Approve quarterly plan?": {
+      "main": [
+        [
+          {
+            "node": "Save quarterly plan",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Change request fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate new Instagram post": {
+      "main": [
+        [
+          {
+            "node": "Generate unique id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate quarterly plan": {
+      "main": [
+        [
+          {
+            "node": "Get approval on the quarterly plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Quaterly plan aggregate": {
+      "main": [
+        [
+          {
+            "node": "Has quarterly plan?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monthly plan aggregate": {
+      "main": [
+        [
+          {
+            "node": "Has monthly plan?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Weekly plan aggregate": {
+      "main": [
+        [
+          {
+            "node": "Has weekly plan?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate monthly plan": {
+      "main": [
+        [
+          {
+            "node": "Montly plan approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate weekly plan": {
+      "main": [
+        [
+          {
+            "node": "Weekly plan approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate quarterly plan",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Generate monthly plan",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Generate weekly plan",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Generate new Instagram post",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "15ba0e8642afe1e394af1c92acab88f43e39a38fb38346d1cba87a9c9d0f3510"
+  }
+}

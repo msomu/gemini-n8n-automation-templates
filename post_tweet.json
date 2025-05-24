@@ -1,0 +1,170 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "text": "={{ $json.tweet }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 2,
+      "position": [
+        120,
+        -120
+      ],
+      "id": "e14cbfea-dbf0-47b7-93d8-7a213398e277",
+      "name": "Post on Twitter",
+      "credentials": {
+        "twitterOAuth2Api": {
+          "id": "utN7biY7OSjIMqNj",
+          "name": "X account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "tweet"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -320,
+        -20
+      ],
+      "id": "8012259b-dbc2-4e4d-a272-38a4de83ffde",
+      "name": "Post the Tweet"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "595a460e-91b9-43b8-9ee6-207d2f2bd99e",
+              "name": "tweet_url",
+              "value": "=https://x.com/msomuin/status/{{$json.id}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        -60
+      ],
+      "id": "015a0196-3c43-42d9-a0e6-91202a01c3fa",
+      "name": "Tweet URL"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8b559d82-b3b6-493f-adfe-e5c56c8e21ca",
+              "name": "error",
+              "value": "The tweet is longer than 280 characters",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        120,
+        80
+      ],
+      "id": "919bb762-448f-4fb5-9d43-dd55b19cdd75",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1ad65d3d-9bd9-4f69-a1c0-57b2f73c8d4f",
+              "leftValue": "={{ $json.tweet.length }}",
+              "rightValue": 280,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -100,
+        -20
+      ],
+      "id": "61edb473-ca48-4539-827f-482dd699d224",
+      "name": "length check"
+    }
+  ],
+  "connections": {
+    "Post on Twitter": {
+      "main": [
+        [
+          {
+            "node": "Tweet URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post the Tweet": {
+      "main": [
+        [
+          {
+            "node": "length check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "length check": {
+      "main": [
+        [
+          {
+            "node": "Post on Twitter",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "15ba0e8642afe1e394af1c92acab88f43e39a38fb38346d1cba87a9c9d0f3510"
+  }
+}

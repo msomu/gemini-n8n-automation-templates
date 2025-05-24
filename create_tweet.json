@@ -1,0 +1,609 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -880,
+        140
+      ],
+      "id": "f395fcef-c237-4f66-a2cc-fc6e04d7a5c0",
+      "name": "user writes",
+      "webhookId": "7a961147-015a-431c-ae0a-bc30bb580e1b",
+      "credentials": {
+        "telegramApi": {
+          "id": "URH0L1QuKpSqXtUc",
+          "name": "BS Tweets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appouqkKzyY0BBwIn",
+          "mode": "list",
+          "cachedResultName": "Agent Blog",
+          "cachedResultUrl": "https://airtable.com/appouqkKzyY0BBwIn"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblnB1WcmSa8gLUB7",
+          "mode": "list",
+          "cachedResultName": "Preferences",
+          "cachedResultUrl": "https://airtable.com/appouqkKzyY0BBwIn/tblnB1WcmSa8gLUB7"
+        },
+        "returnAll": false,
+        "limit": 20,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3de3c43d-684c-46a8-a18b-77a992c37cc1",
+      "name": "Preferences",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "cIsf9YYiclqp239I",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appouqkKzyY0BBwIn",
+          "mode": "list",
+          "cachedResultName": "Agent Blog",
+          "cachedResultUrl": "https://airtable.com/appouqkKzyY0BBwIn"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblG3100zZTbE4bOx",
+          "mode": "list",
+          "cachedResultName": "Keywords",
+          "cachedResultUrl": "https://airtable.com/appouqkKzyY0BBwIn/tblG3100zZTbE4bOx"
+        },
+        "returnAll": false,
+        "limit": 20,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        220
+      ],
+      "id": "06d86053-49a1-4573-9e02-159dc71f3ce6",
+      "name": "Keywords",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "cIsf9YYiclqp239I",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "Keywords",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        360,
+        220
+      ],
+      "id": "8bad9917-7bf9-462c-9b5c-bec01bfee116",
+      "name": "Aggregate Keywords"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "Preferences",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        360,
+        0
+      ],
+      "id": "99d3c0c8-3625-4b15-abc2-5f678406c167",
+      "name": "Aggregate Preferences"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        640,
+        100
+      ],
+      "id": "1f4914fe-2c8f-49bd-ad86-9e579e7ee1a8",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appouqkKzyY0BBwIn",
+          "mode": "list",
+          "cachedResultName": "Agent Blog",
+          "cachedResultUrl": "https://airtable.com/appouqkKzyY0BBwIn"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblnB1WcmSa8gLUB7",
+          "mode": "list",
+          "cachedResultName": "Preferences",
+          "cachedResultUrl": "https://airtable.com/appouqkKzyY0BBwIn/tblnB1WcmSa8gLUB7"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Preferences": "={{ $fromAI('add_preference')}}"
+          },
+          "matchingColumns": [
+            "Preferences"
+          ],
+          "schema": [
+            {
+              "id": "Preferences",
+              "displayName": "Preferences",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        920,
+        360
+      ],
+      "id": "3b55ee08-3b4c-45a1-be88-bd6935d8a6cd",
+      "name": "add_preferences",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "cIsf9YYiclqp239I",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appouqkKzyY0BBwIn",
+          "mode": "list",
+          "cachedResultName": "Agent Blog",
+          "cachedResultUrl": "https://airtable.com/appouqkKzyY0BBwIn"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblG3100zZTbE4bOx",
+          "mode": "list",
+          "cachedResultName": "Keywords",
+          "cachedResultUrl": "https://airtable.com/appouqkKzyY0BBwIn/tblG3100zZTbE4bOx"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Keywords": "={{ $fromAI('add_keywords')}}"
+          },
+          "matchingColumns": [
+            "Keywords"
+          ],
+          "schema": [
+            {
+              "id": "Keywords",
+              "displayName": "Keywords",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        1060,
+        360
+      ],
+      "id": "5274f6cd-f820-4dab-9a3a-454b47fb93eb",
+      "name": "add_keywords",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "cIsf9YYiclqp239I",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.user_text }}",
+        "options": {
+          "systemMessage": "=## Workflow Overview\n\n**4-Step Flow:**\n1. **Brainstorm:** Discuss topics, gather user inputs, suggest tweet ideas.\n2. **Draft:** Write a full tweet for approval.  \n   **Strictly validate** that it does **NOT** start or end with quotes (`\"`).  \n   If quotes are found, **fix automatically**.\n3. **Post:** After approval, post the tweet on Twitter.  \n   Send me the tweet link after posting.\n4. **Flex:** Break flow only if user asks.\n\n---\n\n## Voice and Style\n\n- Sound like a real dev tweeting casually.\n- Be clear, a little funny, a little sarcastic when needed.\n- No pretending to be smarter than needed.\n- Keep it short and punchy (max 280 characters).\n- **Do not use any emojis.**\n- **Do not use any hashtags.**\n- **Do not ask questions just to increase engagement.** Be natural.\n\n---\n\n## Content Focus\n\n- Dev wins and fails.\n- Programming languages, frameworks (trending ones especially).\n- Tech news, dev culture.\n- Dev lifestyle and habits.\n- Career growth, job hunting.\n- Android dev if asked.\n- DSA and interview prep if asked.\n\n---\n\n## Tweet Formats\n\n- Observations:  \n  *Example:* That moment when your code works but you don't know why.\n- Relatable jokes:  \n  *Example:* Me during code review: \"Yes, I can explain that function... eventually.\"\n- Tips/Insights:  \n  *Example:* Name variables like you’ll debug them at 3 AM.\n- Hot takes:  \n  *Example:* Semicolons in JS aren't optional. They're mandatory.\n\n---\n\n## Important Rules\n\n- **Never** wrap tweets in quotes (`\"`). Validate and fix if needed.\n- **No emojis** under any condition.\n- **No hashtags** under any condition.\n- **Post only after getting approval.**\n- **Only one tweet at a time.**\n- Avoid heavy jargon.  \n- No politics, no trashing companies or products.\n- No marketing language.\n- Always sound authentic, casual, and human.\n\n---\n\n## Additional Context\n\n- Current Preferences:  \n  `{{ $json.Preferences.map(pref => `${pref[\"Preferences\"]}`).join('') }}`\n  \n- Current Keywords:  \n  `{{ $json.Keywords.map(pref => `${pref[\"Keywords\"]}`).join('') }}`\n\n---\n\n### Quick Reminder:\nGood tweets = Feel real, add a little value (humor, insight, relatable pain), don't beg for engagement.\n\nUse the tavily tool attached for browsing the internet and also for checking the authenticity of the tweet or message."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        920,
+        100
+      ],
+      "id": "b5079ce4-929b-477a-8af2-ca4437ed1f97",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"user_text\": {{ JSON.stringify($('user writes').item.json.message.text) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        780,
+        100
+      ],
+      "id": "98ecffdd-b2e2-465f-a32e-223a4703d007",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-exp",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        420,
+        460
+      ],
+      "id": "498575f0-6e27-4f58-8cf2-9a311072bd42",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "BBCNO5fPf2OIJxQt",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "post_tweet",
+        "description": "Call this tool when the tweet is perfectly ready and we can go ahead and post it to Twitter. Also make sure if there are no \" quotes in the starting and ending.",
+        "workflowId": {
+          "__rl": true,
+          "value": "Ba0647sc2Ctf7dcf",
+          "mode": "list",
+          "cachedResultName": "Post Tweet"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "tweet": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tweet', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "tweet"
+          ],
+          "schema": [
+            {
+              "id": "tweet",
+              "displayName": "tweet",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "username",
+              "displayName": "username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        360
+      ],
+      "id": "c36b5b03-9dab-4916-9f83-36631a98b178",
+      "name": "Post to Twitter"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('user writes').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1340,
+        100
+      ],
+      "id": "cc52f342-0d27-4ef0-970a-e0ad04345622",
+      "name": "Output Telegram",
+      "webhookId": "6be2792c-1cdb-4624-99f3-2af7e91ba427",
+      "credentials": {
+        "telegramApi": {
+          "id": "URH0L1QuKpSqXtUc",
+          "name": "BS Tweets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('user writes').item.json.message.chat.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        780,
+        360
+      ],
+      "id": "83bd24f9-b9a5-4ad7-8c94-eeb847e81637",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "description": "Call this tool to check on the internet for the authenticity of the message and also to brainstrom any new topics if needed",
+        "workflowId": {
+          "__rl": true,
+          "value": "CSW0NF0NO6zGkOZa",
+          "mode": "list",
+          "cachedResultName": "tavily"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "query"
+          ],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1320,
+        360
+      ],
+      "id": "782afbaf-c574-457f-9051-76a8e371dfb1",
+      "name": "Tavily"
+    }
+  ],
+  "connections": {
+    "user writes": {
+      "main": [
+        [
+          {
+            "node": "Keywords",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Preferences",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preferences": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Preferences",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keywords": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Keywords",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Keywords": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Aggregate Preferences": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_preferences": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_keywords": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Output Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post to Twitter": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "15ba0e8642afe1e394af1c92acab88f43e39a38fb38346d1cba87a9c9d0f3510"
+  }
+}
